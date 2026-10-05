@@ -291,4 +291,47 @@ void hist_eq(float *in, int h, int w) {
      */
 
     // IMPLEMENT YOUR CODE HERE
+    int hist[256] = {0};
+    for (int i = 0; i < h; i++){
+        for (int j = 0; j < w; j++){
+            hist[static_cast<int>(in[i * w + j])]++;//统计各灰度级像素个数
+        }
+    }
+    float map[256];
+    int sum = 0;
+    int cdf_min = -1;
+    for (int k = 0;k < 256; k++){
+        sum += hist[k];
+        if (sum != 0 && cdf_min == -1){
+            cdf_min = sum;
+        }
+        if (h * w - cdf_min > 0){
+            float account = (float)(sum - cdf_min) / (h * w - cdf_min);
+            map[k] = account * 255.0f;
+        }
+        else{
+            map[k] = 0;
+        }
+        if (map[k] > 255){
+            map[k] = 255;
+        }
+        if (map[k] < 0){
+            map[k] = 0;
+        }
+    }
+    for (int i = 0; i < h; i++){
+        for (int j = 0; j < w; j++){
+            int old_val = (int)in[i * w + j];
+            in[i * w + j] = map[old_val];
+            if (in[i * w + j] > 255){
+                in[i * w + j] = 255;
+            }
+            if (in[i * w + j] < 0){
+                in[i * w + j] = 0;
+            }
+        }
+    }
+
+
+
 }
