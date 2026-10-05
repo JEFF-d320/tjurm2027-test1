@@ -5,9 +5,13 @@ int my_strlen(char *str) {
     /**
      * 统计字符串的长度，太简单了。
      */
-
     // IMPLEMENT YOUR CODE HERE
-    return 0;
+    int len = 0;
+    while (*str != '\0') {
+        len++;
+        str++;
+    }
+    return len;
 }
 
 
@@ -19,6 +23,14 @@ void my_strcat(char *str_1, char *str_2) {
      */
 
     // IMPLEMENT YOUR CODE HERE
+    int len1 = my_strlen(str_1);
+    int len2 = my_strlen(str_2);
+    for (int i = len1,j =0 ; j < len2; i++, j++){
+        str_1[i] = str_2[j];
+    }
+    str_1[len1 + len2] = '\0';
+
+
 }
 
 
@@ -31,7 +43,21 @@ char* my_strstr(char *s, char *p) {
      */
 
     // IMPLEMENT YOUR CODE HERE
-    return 0;
+    int len_s = my_strlen(s);
+    int len_p = my_strlen(p);   
+    for (int i = 0; i<= len_s-len_p; i++){   
+        int j = 0;
+        while (j < len_p && s[i+j] == p[j]){
+            j++;
+            }
+        if (j == len_p){
+            return &s[i];
+        }
+    }
+    
+    
+    
+    return nullptr;
 }
 
 
@@ -97,6 +123,23 @@ void rgb2gray(float *in, float *out, int h, int w) {
 
     // IMPLEMENT YOUR CODE HERE
     // ...
+    for (int i = 0; i < h; i++){
+        for (int j = 0; j < w; j++){
+            out[i * w + j] = 0.1140 * in[(i * w + j) * 3 + 2] + 0.5870 * in[(i * w + j) * 3 + 1] + 0.2989 * in[(i * w + j) * 3];
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 // 练习5，实现图像处理算法 resize：缩小或放大图像
@@ -156,7 +199,7 @@ void resize(float *in, float *out, int h, int w, int c, float scale) {
      *          Q2 = P3 * ———————— + P4 * ————————
      *                     x2 - x1         x2 - x1
      *
-     *                    y2 - y          y - y1
+     *                    y - y1          y2 - y
      *          Q = Q1 * ———————— + Q2 * ————————
      *                    y2 - y1         y2 - y1
      *
@@ -198,7 +241,34 @@ void resize(float *in, float *out, int h, int w, int c, float scale) {
 
     int new_h = h * scale, new_w = w * scale;
     // IMPLEMENT YOUR CODE HERE
-
+    for (int i = 0; i < new_h; i++){
+        for (int j = 0; j < new_w; j++){
+            float x0 = (float)j / scale;
+            float y0 = (float)i / scale;
+            int x1 = static_cast<int>(x0);
+            int y1 = static_cast<int>(y0);
+            int x2 = x1 + 1;
+            int y2 = y1 + 1;
+            if (x2 >= w){
+                x2 = w - 1;//边界检测
+            }
+            if (y2 >= h){
+                y2 = h - 1;//边界检测
+            }
+            float dx = x0 - x1;
+            float dy = y0 - y1;
+            for (int k = 0; k < c; k++){
+                float P1 = in[(y1 * w + x1) * c + k];
+                float P2 = in[(y1 * w + x2) * c + k];
+                float P3 = in[(y2 * w + x1) * c + k];
+                float P4 = in[(y2 * w + x2) * c + k];
+                float Q = P1 * (1 - dx) * (1 - dy) + P2 * dx * (1 - dy) + P3 * (1 - dx) * dy + P4 * dx *dy;
+                out[(i * new_w + j) * c + k] = Q;
+            }
+        }
+    }
+   
+   
 }
 
 

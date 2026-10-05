@@ -1,6 +1,6 @@
 #ifndef TJURM_TEST_INCLUDE_TESTS_H_
 #define TJURM_TEST_INCLUDE_TESTS_H_
-
+#include <iostream>
 // 练习1，实现库函数strlen
 int my_strlen(char *str);
 

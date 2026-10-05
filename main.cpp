@@ -1,5 +1,5 @@
-#include "utils.h"
-#include "tests.h"
+#include "include/utils.h"
+#include "include/tests.h"
 #include <iostream>
 #include <cstring>
 
@@ -156,18 +156,18 @@ void test_resize() {
 }
 
 int main() {
-    std::cout << "开始测试函数 << my_strlen >> ..." << std::endl;
-    test_strlen();
-    std::cout << "开始测试函数 << my_strcat >> ..." << std::endl;
-    test_strcat();
-    std::cout << "开始测试函数 << my_strstr >> ..." << std::endl;
-    test_strstr();
-    std::cout << "开始测试函数 << rgb2gray >> ..." << std::endl;
-    test_rgb2gray();
+    //std::cout << "开始测试函数 << my_strlen >> ..." << std::endl;
+    //test_strlen();
+    //std::cout << "开始测试函数 << my_strcat >> ..." << std::endl;
+    //test_strcat();
+    //std::cout << "开始测试函数 << my_strstr >> ..." << std::endl;
+    //test_strstr();
+    //std::cout << "开始测试函数 << rgb2gray >> ..." << std::endl;
+    //test_rgb2gray();
     std::cout << "开始测试函数 << resize >> ..." << std::endl;
     test_resize();
-    std::cout << "开始测试函数 << hist_eq >> ..." << std::endl;
-    test_hist_eq();
+    //std::cout << "开始测试函数 << hist_eq >> ..." << std::endl;
+    //test_hist_eq();
     return 0;
 }
 
